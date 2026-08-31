@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Order Queue{% endblock %}
+{% block content %}
+<h2 class="section-title">Pending Orders</h2>
+<div class="cha-card mb-4">
+  <div class="table-responsive">
+    <table class="table table-cha align-middle">
+      <thead><tr><th>Type</th><th>Patient</th><th>Doctor</th><th>Priority</th><th></th></tr></thead>
+      <tbody>
+        {% for o in pending %}
+        <tr>
+          <td>{{ o.get_order_type_display }}</td>
+          <td>{{ o.patient.user.get_full_name }}</td>
+          <td>{{ o.doctor }}</td>
+          <td><span class="flag-pill">{{ o.get_priority_display }}</span></td>
+          <td>
+            <form method="post" action="{% url 'orders:accept_order' o.id %}">
+              {% csrf_token %}
+              <button class="btn btn-sm btn-cha-primary">Accept</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}<tr><td colspan="5" class="text-center text-muted py-3">No pending orders.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 class="section-title">My In-Progress Orders</h2>
+<div class="cha-card">
+  <div class="table-responsive">
+    <table class="table table-cha align-middle">
+      <thead><tr><th>Type</th><th>Patient</th><th></th></tr></thead>
+      <tbody>
+        {% for o in in_progress %}
+        <tr>
+          <td>{{ o.get_order_type_display }}</td>
+          <td>{{ o.patient.user.get_full_name }}</td>
+          <td><a href="{% url 'orders:complete_order' o.id %}" class="btn btn-sm btn-outline-secondary">Enter Results</a></td>
+        </tr>
+        {% empty %}<tr><td colspan="3" class="text-center text-muted py-3">Nothing in progress.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

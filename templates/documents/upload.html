@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Upload Document{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h4 class="mb-3"><i class="bi bi-shield-lock me-2"></i>Upload Document (encrypted at rest)</h4>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>
+        {% endfor %}
+        <button class="btn btn-cha-primary w-100" type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

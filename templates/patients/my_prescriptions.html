@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}My Prescriptions{% endblock %}
+{% block content %}
+<h2 class="section-title">Doctor Guidance & Prescriptions</h2>
+{% for p in prescriptions %}
+<div class="cha-card mb-3">
+  <div class="d-flex justify-content-between">
+    <h5>{{ p.title }}</h5>
+    <span class="flag-pill">{{ p.get_condition_assessment_display }}</span>
+  </div>
+  <p class="text-muted small mb-2">{{ p.doctor }} · {{ p.created_at|date:"M d, Y" }}</p>
+  <p class="mb-0">{{ p.report_text|linebreaks }}</p>
+</div>
+{% empty %}
+<div class="cha-card text-muted">No prescriptions or reports yet.</div>
+{% endfor %}
+{% endblock %}

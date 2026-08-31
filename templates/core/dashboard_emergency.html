@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Emergency Services{% endblock %}
+{% block content %}
+<h2 class="section-title">Emergency Services Console</h2>
+<div class="cha-card">
+  <p>Quickly register a new patient arriving for care.</p>
+  <a href="{% url 'emergency:intake' %}" class="btn btn-cha-primary"><i class="bi bi-plus-circle me-1"></i> New Patient Intake</a>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Register as {{ role }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h4 class="mb-3">Register as {{ role }}</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+            {{ field.errors }}
+          </div>
+        {% endfor %}
+        <button class="btn btn-cha-primary w-100" type="submit">Submit Registration</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

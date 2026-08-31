@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="cha-card">
+  <h4>Welcome, {{ user.get_full_name|default:user.username }}</h4>
+  <p class="text-muted">Your account role ({{ user.get_role_display }}) doesn't have a dedicated dashboard yet.</p>
+</div>
+{% endblock %}

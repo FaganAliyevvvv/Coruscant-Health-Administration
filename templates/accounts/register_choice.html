@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<h2 class="section-title">Register with Coruscant Health</h2>
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="cha-card text-center">
+      <i class="bi bi-heart-pulse fs-1" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Patient</h5>
+      <p class="text-muted">Register to upload device readings and view your care.</p>
+      <a href="{% url 'accounts:register_patient' %}" class="btn btn-cha-primary">Register as Patient</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cha-card text-center">
+      <i class="bi bi-clipboard2-pulse fs-1" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Doctor</h5>
+      <p class="text-muted">Register to manage patient records and prescriptions.</p>
+      <a href="{% url 'accounts:register_doctor' %}" class="btn btn-cha-primary">Register as Doctor</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cha-card text-center">
+      <i class="bi bi-building-gear fs-1" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Department</h5>
+      <p class="text-muted">Register to receive and execute service orders.</p>
+      <a href="{% url 'accounts:register_department' %}" class="btn btn-cha-primary">Register as Department</a>
+    </div>
+  </div>
+</div>
+<p class="text-muted mt-4">Administrator and Emergency Services accounts are created directly by an existing Administrator via the Django admin console, not self-registration.</p>
+{% endblock %}

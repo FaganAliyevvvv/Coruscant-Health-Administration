@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cha
+          POSTGRES_PASSWORD: cha
+          POSTGRES_DB: cha_test
+        ports: [ "5432:5432" ]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Django checks
+        env:
+          DOCUMENT_ENCRYPTION_KEY: "aTest0EncryptionKey1234567890abcdefgHIJ4Q="
+          DJANGO_SECRET_KEY: "ci-secret-key"
+        run: python manage.py check
+
+      - name: Run migrations
+        env:
+          DOCUMENT_ENCRYPTION_KEY: "aTest0EncryptionKey1234567890abcdefgHIJ4Q="
+          DJANGO_SECRET_KEY: "ci-secret-key"
+        run: python manage.py migrate --noinput
+
+      - name: Run test suite
+        env:
+          DOCUMENT_ENCRYPTION_KEY: "aTest0EncryptionKey1234567890abcdefgHIJ4Q="
+          DJANGO_SECRET_KEY: "ci-secret-key"
+        run: python manage.py test --verbosity 2
+
+  # Deploys only run on pushes to main, and only if deployment secrets are configured.
+  # See README.md "Deploying" section for how to wire this up to your cloud of choice.
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder deploy step
+        run: |
+          echo "Wire this step to your target platform's deploy action, e.g.:"
+          echo " - Render/Railway/Fly.io: their official GitHub Action + API token secret"
+          echo " - AWS: aws-actions/amazon-ecs-deploy-task-definition or 'eb deploy'"
+          echo " - GCP: google-github-actions/deploy-cloudrun"
+          echo " - Azure: azure/webapps-deploy"
+          echo "No deploy target is configured yet, so this is a no-op."

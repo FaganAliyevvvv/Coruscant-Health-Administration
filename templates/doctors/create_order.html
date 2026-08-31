@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Order Service{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h4 class="mb-3">Order Service for {{ patient.user.get_full_name }}</h4>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>
+        {% endfor %}
+        <button class="btn btn-cha-primary w-100" type="submit">Submit Order</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

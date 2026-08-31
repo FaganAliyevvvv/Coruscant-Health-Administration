@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Coruscant Health Administration{% endblock %}</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="{% static 'css/theme.css' %}" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-cha">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'core:home' %}">
+        <span class="brand-mark">CH</span>Coruscant Health Administration
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'core:dashboard' %}">Dashboard</a></li>
+            {% if is_patient %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'patients:my_readings' %}">My Readings</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'patients:my_prescriptions' %}">Prescriptions</a></li>
+            {% endif %}
+            {% if is_doctor %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'doctors:patient_list' %}">Patients</a></li>
+            {% endif %}
+            {% if is_department %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'orders:order_queue' %}">Order Queue</a></li>
+            {% endif %}
+            {% if is_emergency %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'emergency:intake' %}">Intake</a></li>
+            {% endif %}
+            {% if is_admin_role %}
+              <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
+            {% endif %}
+            <li class="nav-item ms-lg-2">
+              <span class="badge bg-light text-dark badge-role">{{ user.get_role_display }}</span>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <form method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-outline-light">Log out</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Log in</a></li>
+            <li class="nav-item"><a class="btn btn-cha-primary btn-sm ms-lg-2" href="{% url 'accounts:register_choice' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    {% if needs_approval %}
+      <div class="alert alert-warning">
+        <i class="bi bi-hourglass-split me-1"></i>
+        Your account is awaiting Administrator approval. Some features are locked until then.
+      </div>
+    {% endif %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <main class="container my-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="cha-footer text-center border-top">
+    Coruscant Health Administration &middot; Medical Management System &middot; Serving Coruscant since before the Clone Wars
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

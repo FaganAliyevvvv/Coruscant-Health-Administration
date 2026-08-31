@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Department Dashboard{% endblock %}
+{% block content %}
+<h2 class="section-title">Department Console</h2>
+<div class="cha-card">
+  <p>View and execute service orders sent by doctors (CT scans, PET scans, labs, etc.).</p>
+  <a href="{% url 'orders:order_queue' %}" class="btn btn-cha-primary"><i class="bi bi-clipboard-check me-1"></i> Open Order Queue</a>
+</div>
+{% endblock %}

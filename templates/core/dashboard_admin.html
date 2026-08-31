@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Administrator Dashboard{% endblock %}
+{% block content %}
+<h2 class="section-title">Administrator Dashboard</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="cha-card stat-card"><div class="stat-number">{{ total_patients }}</div><div class="stat-label">Approved Patients</div></div></div>
+  <div class="col-md-3"><div class="cha-card stat-card"><div class="stat-number">{{ total_doctors }}</div><div class="stat-label">Approved Doctors</div></div></div>
+  <div class="col-md-3"><div class="cha-card stat-card"><div class="stat-number">{{ open_orders }}</div><div class="stat-label">Open Service Orders</div></div></div>
+  <div class="col-md-3"><div class="cha-card stat-card"><div class="stat-number">{{ pending_users|length }}</div><div class="stat-label">Pending Approvals</div></div></div>
+</div>
+
+<div class="cha-card">
+  <h5 class="mb-3">Accounts Awaiting Approval</h5>
+  {% if pending_users %}
+  <div class="table-responsive">
+    <table class="table table-cha align-middle">
+      <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Registered</th><th></th></tr></thead>
+      <tbody>
+        {% for u in pending_users %}
+        <tr>
+          <td>{{ u.get_full_name|default:u.username }}</td>
+          <td>{{ u.username }}</td>
+          <td><span class="flag-pill">{{ u.get_role_display }}</span></td>
+          <td>{{ u.created_at|date:"M d, Y" }}</td>
+          <td><a href="/admin/accounts/user/{{ u.id }}/change/" class="btn btn-sm btn-cha-primary">Review in Admin</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p class="text-muted mb-0">No accounts pending approval right now.</p>
+  {% endif %}
+</div>
+<p class="mt-3 text-muted">Full database management (create/edit any record, manage tables, upgrade data) is available in the <a href="/admin/">Django admin console</a>.</p>
+{% endblock %}

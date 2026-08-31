@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}My Readings{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="section-title mb-0">My Readings</h2>
+  <a href="{% url 'patients:upload_reading' %}" class="btn btn-cha-primary"><i class="bi bi-plus"></i> New Reading</a>
+</div>
+<div class="cha-card">
+  <div class="table-responsive">
+    <table class="table table-cha align-middle">
+      <thead><tr><th>Recorded</th><th>Heart Rate</th><th>BP</th><th>Temp</th><th>SpO2</th><th>Flags</th></tr></thead>
+      <tbody>
+        {% for r in readings %}
+        <tr>
+          <td>{{ r.recorded_at|date:"M d, Y H:i" }}</td>
+          <td>{{ r.heart_rate_bpm|default:"–" }} bpm</td>
+          <td>{{ r.systolic_bp|default:"–" }}/{{ r.diastolic_bp|default:"–" }}</td>
+          <td>{{ r.temperature_c|default:"–" }} °C</td>
+          <td>{{ r.spo2_percent|default:"–" }}%</td>
+          <td>{% for f in r.is_out_of_range %}<span class="flag-pill me-1">{{ f }}</span>{% endfor %}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center text-muted py-4">No readings yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

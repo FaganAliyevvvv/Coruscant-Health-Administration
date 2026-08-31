@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Emergency Intake{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h4 class="mb-3"><i class="bi bi-lightning-charge-fill text-danger me-2"></i>New Patient Intake</h4>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>
+        {% endfor %}
+        <button class="btn btn-cha-primary w-100" type="submit">Register Patient Now</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h5 class="mb-3">Recently Registered</h5>
+      {% for i in recent %}
+        <div class="border-bottom py-2">
+          <strong>{{ i.patient.user.get_full_name }}</strong> — <span class="flag-pill">{{ i.get_triage_priority_display }}</span>
+          <div class="text-muted small">{{ i.created_at|date:"H:i" }} · MRN {{ i.patient.mrn }}</div>
+        </div>
+      {% empty %}<p class="text-muted">No intakes recorded yet today.</p>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

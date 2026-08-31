@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SECRET_KEY: "local-dev-secret-change-me"
+      DJANGO_DEBUG: "True"
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1"
+      DOCUMENT_ENCRYPTION_KEY: "${DOCUMENT_ENCRYPTION_KEY}"
+      DATABASE_URL: "postgres://cha:cha@db:5432/cha"
+    depends_on:
+      - db
+    volumes:
+      - media_data:/app/media
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: cha
+      POSTGRES_PASSWORD: cha
+      POSTGRES_DB: cha
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
+  media_data:

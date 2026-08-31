@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Coruscant Health Administration{% endblock %}
+{% block content %}
+<div class="hero text-center mb-5">
+  <div class="container">
+    <h1 class="display-5">Health care coordination for every citizen of Coruscant</h1>
+    <p class="lead col-lg-8 mx-auto">Device readings, doctor reports, imaging orders, and secure documents — one
+      system connecting Patients, Doctors, Departments, Emergency Services, and Administration.</p>
+    <div class="mt-4">
+      <a href="{% url 'accounts:register_choice' %}" class="btn btn-cha-primary btn-lg me-2">Register</a>
+      <a href="{% url 'accounts:login' %}" class="btn btn-outline-light btn-lg">Log in</a>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-3">
+    <div class="cha-card">
+      <i class="bi bi-heart-pulse fs-2" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Patients</h5>
+      <p class="text-muted mb-0">Upload device readings, track your vitals, and view your doctor's guidance.</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="cha-card">
+      <i class="bi bi-clipboard2-pulse fs-2" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Doctors</h5>
+      <p class="text-muted mb-0">Monitor patient trends, write reports, and order imaging or lab work.</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="cha-card">
+      <i class="bi bi-building-gear fs-2" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Departments</h5>
+      <p class="text-muted mb-0">Receive, execute, and report results for CT, PET, MRI and more.</p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="cha-card">
+      <i class="bi bi-shield-lock fs-2" style="color:var(--cha-teal)"></i>
+      <h5 class="mt-2">Secure by design</h5>
+      <p class="text-muted mb-0">Documents are encrypted at rest; access is role-checked on every request.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

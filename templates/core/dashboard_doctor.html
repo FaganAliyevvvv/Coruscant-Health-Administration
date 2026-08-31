@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Doctor Dashboard{% endblock %}
+{% block content %}
+<h2 class="section-title">Welcome, Dr. {{ user.last_name }}</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="cha-card stat-card"><div class="stat-number">{{ patient_count }}</div><div class="stat-label">Patients in system</div></div>
+  </div>
+  <div class="col-md-4">
+    <div class="cha-card">
+      <h6 class="text-muted">Specialty</h6>
+      <div class="fs-6">{{ profile.specialty }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <a href="{% url 'doctors:patient_list' %}" class="btn btn-cha-primary w-100 h-100 d-flex align-items-center justify-content-center">
+      <i class="bi bi-people me-2"></i> View Patient Records
+    </a>
+  </div>
+</div>
+{% endblock %}

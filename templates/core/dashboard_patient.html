@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<h2 class="section-title">Welcome, {{ user.get_full_name }}</h2>
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="cha-card">
+      <h6 class="text-muted">Medical Record Number</h6>
+      <div class="fs-4 fw-bold">{{ profile.mrn }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cha-card">
+      <h6 class="text-muted">Device</h6>
+      <div class="fs-6">{{ profile.device_id|default:"No device on file" }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <a href="{% url 'patients:upload_reading' %}" class="btn btn-cha-primary w-100 h-100 d-flex align-items-center justify-content-center">
+      <i class="bi bi-upload me-2"></i> Upload New Reading
+    </a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h5 class="mb-3">Recent Readings</h5>
+      {% for r in recent_readings %}
+        <div class="border-bottom py-2">
+          <strong>{{ r.recorded_at|date:"M d, H:i" }}</strong> —
+          HR {{ r.heart_rate_bpm|default:"–" }} bpm,
+          SpO2 {{ r.spo2_percent|default:"–" }}%
+          {% if r.is_out_of_range %}<span class="flag-pill ms-1">check: {{ r.is_out_of_range|join:", " }}</span>{% endif %}
+        </div>
+      {% empty %}<p class="text-muted mb-0">No readings uploaded yet.</p>{% endfor %}
+      <a href="{% url 'patients:my_readings' %}" class="d-inline-block mt-3">View all readings &rarr;</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="cha-card">
+      <h5 class="mb-3">Recent Doctor Guidance</h5>
+      {% for p in recent_prescriptions %}
+        <div class="border-bottom py-2">
+          <strong>{{ p.title }}</strong> — {{ p.doctor }}<br>
+          <span class="text-muted small">{{ p.created_at|date:"M d, Y" }} · {{ p.get_condition_assessment_display }}</span>
+        </div>
+      {% empty %}<p class="text-muted mb-0">No reports from your doctor yet.</p>{% endfor %}
+      <a href="{% url 'patients:my_prescriptions' %}" class="d-inline-block mt-3">View all &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

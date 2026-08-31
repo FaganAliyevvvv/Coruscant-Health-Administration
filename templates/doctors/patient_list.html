@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+<h2 class="section-title">Patient Records</h2>
+<div class="cha-card">
+  <div class="table-responsive">
+    <table class="table table-cha align-middle">
+      <thead><tr><th>MRN</th><th>Name</th><th>DOB</th><th></th></tr></thead>
+      <tbody>
+        {% for p in patients %}
+        <tr>
+          <td>{{ p.mrn }}</td>
+          <td>{{ p.user.get_full_name }}</td>
+          <td>{{ p.date_of_birth }}</td>
+          <td><a href="{% url 'doctors:patient_detail' p.id %}" class="btn btn-sm btn-cha-primary">Open Record</a></td>
+        </tr>
+        {% empty %}<tr><td colspan="4" class="text-center text-muted py-4">No patients in system yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
