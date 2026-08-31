@@ -26,7 +26,7 @@ Clone the project:
 
 git clone https://github.com/FaganAliyevvvv/Coruscant-Health-Administration.git
 
-cd coruscant_health
+cd Coruscant-Health-Administration
 
 Install dependencies:
 
