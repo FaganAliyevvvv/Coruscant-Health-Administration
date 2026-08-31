@@ -24,7 +24,7 @@ It allows users to:
 
 Clone the project:
 
-git clone <your-repo-url-here>
+git clone https://github.com/FaganAliyevvvv/Coruscant-Health-Administration.git
 cd coruscant_health
 
 Install dependencies:
