@@ -33,6 +33,7 @@ Install dependencies:
 pip install -r requirements.txt
 
 Set required environment variables:
+
 linux:
 
 export DJANGO_SECRET_KEY="dev-secret-key"
