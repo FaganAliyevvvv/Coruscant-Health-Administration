@@ -33,9 +33,12 @@ Install dependencies:
 pip install -r requirements.txt
 
 Set required environment variables:
-
+linux:
 export DJANGO_SECRET_KEY="dev-secret-key"
 export DOCUMENT_ENCRYPTION_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
+
+windows:
+$env:DJANGO_SECRET_KEY = "dev-secret-key"; $env:DOCUMENT_ENCRYPTION_KEY = python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 
 Run migrations:
 
