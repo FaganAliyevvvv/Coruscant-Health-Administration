@@ -14,8 +14,8 @@ It allows users to:
 
 * Register and manage patients
 * Register and manage doctors
-* Register and manage departments (imaging, labs, etc.)
-* Create and manage service orders (CT scan, PET scan, MRI, X-ray, blood test, ultrasound)
+* Register and manage departments 
+* Create and manage service orders 
 * Create and manage medical records (device readings, prescriptions, encrypted documents)
 * Approve or reject new Patient/Doctor/Department registrations (Administrator)
 * Fast-track new patient intake (Emergency Services)
